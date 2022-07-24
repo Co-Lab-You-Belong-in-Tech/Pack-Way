@@ -1,10 +1,13 @@
 const asyncHandler = require("express-async-handler");
 
+const Trip = require("../models/tripModel");
+
 // @desc Get Trip
 // @route GET /api/trip
 // @access Public (for now)
 const getTrip = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "get trip" });
+  const trip = await Trip.find();
+  res.status(200).json(trip);
 });
 
 // @desc Create Trip
@@ -16,7 +19,13 @@ const createTrip = asyncHandler(async (req, res) => {
     throw new Error("Please add a text field");
   }
 
-  res.status(200).json({ message: "Create a trip" });
+  const trip = await Trip.create({
+    text: req.body.text,
+    // location: req.body.location,
+    // dates: req.body.dates,
+  });
+
+  res.status(200).json(trip);
 });
 
 // @desc Update Trip
