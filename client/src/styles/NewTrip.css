@@ -1,0 +1,175 @@
+@import url("https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:wght@100;300;400;500;700&family=Source+Sans+Pro:wght@400;600;700&display=swap");
+
+/* font-family: 'Libre Baskerville', serif;
+font-family: 'Source Sans Pro', sans-serif; */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+.newTrip {
+  /* height: 75vh; */
+  width: 60vw;
+  border: 1px solid #00874c;
+  background-color: #ffffff;
+  border-radius: 32px;
+  margin: auto;
+  margin-top: 6rem;
+  box-shadow: 0px 16px 32px rgba(215, 213, 212, 0.4);
+}
+
+.ntHeader {
+  font-family: "Libre Baskerville", serif;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 75%;
+  margin: 1rem auto;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #d5ddd9;
+}
+
+.nameTrip {
+  display: flex;
+  flex-direction: column;
+}
+
+.formRow {
+  width: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 1rem auto;
+}
+
+.nameTrip label {
+  font-family: "Source Sans Pro";
+}
+
+.nameTrip input {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1rem;
+  height: 2rem;
+  width: 100%;
+  margin-top: 1rem;
+  padding-left: 10px;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2), 0px 2px 2px rgba(0, 0, 0, 0.14),
+    0px 1px 5px rgba(0, 0, 0, 0.12);
+}
+
+.formRowToggle {
+  display: flex;
+  flex-direction: row;
+  width: 75%;
+  justify-content: space-between;
+  margin: 1rem auto;
+}
+
+.formRowCheck p {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 300;
+  color: #677e74;
+  font-style: italic;
+  margin: 0.5rem 0;
+}
+
+.formRowCheck input {
+  align-self: center;
+}
+
+#addCategories {
+  width: 2rem;
+}
+
+.nameTrip input::placeholder {
+  color: #d5ddd9;
+}
+
+.categories {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 75%;
+  margin: 1rem auto;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.iconBox {
+  display: flex;
+  flex-direction: column;
+  width: 7rem;
+  height: 7rem;
+  border: 1px solid #66c69c;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+
+.iconBox h4 {
+  font-family: "Source Sans Pro", sans-serif;
+  font-weight: 600;
+  margin: 0;
+  color: #222222;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 3rem auto;
+}
+
+#createTrip {
+  border: none;
+  border-radius: 4px;
+  background-color: #00a05a;
+  color: #ffffff;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  padding: 1rem 1.5rem;
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+#cancelTrip {
+  border: none;
+  background-color: transparent;
+  font-family: "Roboto", sans-serif;
+  font-weight: bold;
+  padding: 1rem 1.5rem;
+  color: #00a05a;
+  cursor: pointer;
+}
+
+#inactive .iconBox {
+  display: flex;
+  flex-direction: column;
+  width: 7rem;
+  height: 7rem;
+  border: 1px solid #f3f5f4;
+  border-radius: 4px;
+  background-color: #fcfcfc;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  box-sizing: border-box;
+  cursor: not-allowed;
+  color: f3f5f4;
+}
+
+#inactive .iconBox svg {
+  color: #e2e2e2;
+}
+
+#inactive .iconBox h4 {
+  color: #e2e2e2;
+}
