@@ -1,25 +1,35 @@
-const express = require("express");
-const colors = require("colors");
-const dotenv = require("dotenv").config();
-const { errorHandler } = require("./middleware/errorMiddleware");
-const connectDB = require("./config/db");
-const port = process.env.PORT || 5001;
+import express from "express";
+import passport from "passport";
+import colors from "colors";
+import cors from "cors";
+
+// config import
+import { port } from "./config/config.js";
+import connectDB from "./config/db.js";
+
+// route imports
+import tripRouter from "./routes/tripRoutes.js";
+import userRouter from "./routes/userRoutes.js";
+
+// init app
+const app = express();
 
 // connect database
 connectDB();
 
-// init app
-const app = express();
+// cors - only allow front end
+app.use(cors({ origin: "http://localhost:3000" }));
+
+// init passport
+app.use(passport.initialize());
 
 // parse data
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 // routes
-app.use("/api/trip", require("./routes/tripRoutes"));
-
-// error handler
-app.use(errorHandler);
+app.use("/trip", tripRouter);
+app.use("/user", userRouter);
 
 // port listening
 app.listen(port, () => console.log(`Server started on port ${port}`));

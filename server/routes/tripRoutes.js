@@ -1,14 +1,15 @@
-const express = require("express");
+import express from "express";
 const router = express.Router();
-const {
+
+import {
   getTrip,
   createTrip,
   updateTrip,
   deleteTrip,
-} = require("../controllers/tripController");
+} from "../controllers/tripController.js";
 
 router.route("/").get(getTrip).post(createTrip);
 
 router.route("/:id").delete(deleteTrip).put(updateTrip);
 
-module.exports = router;
+export default router;
