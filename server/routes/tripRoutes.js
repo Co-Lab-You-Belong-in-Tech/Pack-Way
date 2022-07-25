@@ -8,8 +8,8 @@ import {
   deleteTrip,
 } from "../controllers/tripController.js";
 
-router.route("/").get(getTrip).post(createTrip);
+router.route("/").post(createTrip);
 
-router.route("/:id").delete(deleteTrip).put(updateTrip);
+router.route("/:id").delete(deleteTrip).put(updateTrip).get(getTrip);
 
 export default router;
