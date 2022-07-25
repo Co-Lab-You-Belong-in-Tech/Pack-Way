@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 import { NODE_ENV, CONNECTION_STRING } from "./config.js";
 
 const connectDB = async () => {
@@ -9,13 +8,13 @@ const connectDB = async () => {
       console.log(`MongoDB connected: ${connection.connection.host}`);
     } else {
       //change back to local host here
-      const connection = await mongoose.connect(process.env.MONGO_URI);
+      const connection = await mongoose.connect("mongodb://127.0.0.1/pack-way");
       console.log(
         `MongoDB Connected: ${connection.connection.host}`.blue.underline
       );
     }
   } catch (error) {
-    console.log(error);
+    console.log("Failed to connect to MongoDB", error);
   }
 };
 

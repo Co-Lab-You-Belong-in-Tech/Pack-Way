@@ -4,7 +4,7 @@ import colors from "colors";
 import cors from "cors";
 
 // config import
-import { port } from "./config/config.js";
+import { PORT } from "./config/config.js";
 import connectDB from "./config/db.js";
 
 // route imports
@@ -32,4 +32,4 @@ app.use("/trip", tripRouter);
 app.use("/user", userRouter);
 
 // port listening
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
