@@ -1,5 +1,7 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,6 +21,7 @@ import "../styles/NewTrip.css";
 const schema = yup.object().shape({
   tripName: yup.string().required(),
   destination: yup.string().required(),
+  categories: yup.boolean(true),
 });
 
 function NewTrip() {
