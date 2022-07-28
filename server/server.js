@@ -1,20 +1,37 @@
-const express = require("express");
-const dotenv = require("dotenv").config();
-const { errorHandler } = require("./middleware/errorMiddleware");
-const port = process.env.PORT || 5001;
+import express from "express";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import cors from "cors";
+import connectDB from "./config/db.js";
 
-// init app
+dotenv.config();
+
+export const PORT = process.env.PORT || 8000;
+export const NODE_ENV = process.env.NODE_ENV;
+
+// import routes
+import tripRouter from "./routes/tripRoutes.js";
+import itemRouter from "./routes/itemRoutes.js";
+
+// connect to database
+connectDB();
+
 const app = express();
 
-// parse data
+//use JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 
 // routes
-app.use("/api/trip", require("./routes/tripRoutes"));
+app.use("/trip", tripRouter);
+app.use("/items", itemRouter);
 
-// error handler
-app.use(errorHandler);
+app.get("/", (req, res) => {
+  res.send("Hello world!");
+});
 
-// port listening
-app.listen(port, () => console.log(`Server started on port ${port}`));
+// port is listening
+app.listen(PORT, () => {
+  console.log(`Server is listening on port : ${PORT}`);
+});

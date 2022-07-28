@@ -1,41 +1,64 @@
-const asyncHandler = require("express-async-handler");
+import Trip from "../models/tripModel.js";
 
-// @desc Get Trip
-// @route GET /api/trip
-// @access Public (for now)
-const getTrip = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: "get trip" });
-});
+export const createTrip = async (req, res) => {
+  const { tripName, destination, dates, categories } = req.body;
 
-// @desc Create Trip
-// @route POST /api/trip
-// @access Public (for now)
-const createTrip = asyncHandler(async (req, res) => {
-  if (!req.body.text) {
-    res.status(400).json();
-    throw new Error("Please add a text field");
+  if (!tripName || !destination || !dates) {
+    res.status(400);
+    throw new Error("Please add all required fields");
   }
 
-  res.status(200).json({ message: "Create a trip" });
-});
+  // Create trip
+  const trip = await Trip.create({
+    tripName,
+    destination,
+    dates,
+    categories,
+  });
 
-// @desc Update Trip
-// @route PUT /api/trip/:id
-// @access Public (for now)
-const updateTrip = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Update trip ${req.params.id}` });
-});
+  if (trip) {
+    res.status(201).json({
+      _id: trip.id,
+      tripName: trip.tripName,
+      destination: trip.destination,
+      dates: trip.dates,
+      categories: trip.categories,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid trip data");
+  }
+};
 
-// @desc Delete Trip
-// @route DELETE /api/trip/:id
-// @access Public (for now)
-const deleteTrip = asyncHandler(async (req, res) => {
-  res.status(200).json({ message: `Delete trip ${req.params.id}` });
-});
+// Get a trip by id
+export const getTrip = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id);
+    if (!trip) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Trip not found" });
+    }
 
-module.exports = {
-  getTrip,
-  createTrip,
-  updateTrip,
-  deleteTrip,
+    return res.status(200).json({ status: "success", data: trip });
+  } catch (error) {
+    return res.status(400).json({ status: "error", message: error.message });
+  }
+};
+
+// Update trip
+export const updateTrip = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id);
+    if (!trip) {
+      res.status(400).json({ status: "error", message: "Trip not found" });
+    }
+
+    const updatedTrip = await Trip.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).json(updatedTrip);
+  } catch (error) {
+    return res.status(400).json({ status: "error", message: error.message });
+  }
 };

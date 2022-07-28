@@ -1,11 +1,9 @@
 {
   "name": "pack-way",
   "version": "1.0.0",
-  "description": "Pack-Way: The smart camping experience.",
-  "main": "server.js",
+  "description": "",
   "scripts": {
-    "start": "node server/server.js",
-    "server": "nodemon server/server.js"
+    "dev": "concurrently \"cd server && npm run dev\" \"cd client && npm start\" "
   },
   "repository": {
     "type": "git",
@@ -16,15 +14,11 @@
   "bugs": {
     "url": "https://github.com/Co-Lab-You-Belong-in-Tech/Pack-Way/issues"
   },
-  "homepage": "https://github.com/Co-Lab-You-Belong-in-Tech/Pack-Way#readme",
+  "workspaces": [
+    "client",
+    "server"
+  ],
   "dependencies": {
-    "colors": "^1.4.0",
-    "dotenv": "^16.0.1",
-    "express": "^4.18.1",
-    "express-async-handler": "^1.2.0",
-    "mongoose": "^6.4.6"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.19"
+    "concurrently": "^7.3.0"
   }
 }

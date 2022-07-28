@@ -1,0 +1,100 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.logo {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.logo img {
+  width: 20rem;
+  margin: 1rem auto;
+}
+
+.overviewBtns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 5rem;
+  margin: 2rem 0;
+}
+
+.overviewBtns button {
+  width: 30%;
+  height: 4rem;
+  background: transparent;
+  border: none;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #394641;
+  cursor: pointer;
+}
+
+#checklistBtn {
+  border-bottom: 2px solid #00a05a;
+  color: #00a05a;
+}
+
+.checklistContainer {
+  max-width: 90%;
+  margin: 1rem;
+  padding: 10px;
+  font-family: "Source Sans Pro", sans-serif;
+  display: grid;
+  grid-template-columns: 1fr 4fr 1fr 1fr 1fr;
+  row-gap: 1rem;
+}
+
+.itemsHeader {
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 18px;
+  padding: 1rem;
+  border-bottom: 1px solid rgb(221, 220, 220);
+}
+
+.addCategory {
+  padding: 1rem;
+  border-bottom: 1px solid rgb(221, 220, 220);
+}
+
+.addCategory button {
+  border: none;
+  background-color: transparent;
+  margin: auto 0;
+  color: #00a05a;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.categoryName {
+  grid-column: 1 / 6;
+  padding-left: 1rem;
+  padding-bottom: 0.8rem;
+}
+
+.friendOneHeader,
+.friendTwoHeader,
+.friendThreeHeader {
+  padding: 1rem;
+  border-bottom: 1px solid rgb(221, 220, 220);
+  justify-content: center;
+}
+
+.itemCheckbox {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgb(221, 220, 220);
+}
+
+.items {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgb(221, 220, 220);
+}
+
+.friendStatus {
+  padding: 0.5rem;
+  border-bottom: 1px solid rgb(221, 220, 220);
+}
