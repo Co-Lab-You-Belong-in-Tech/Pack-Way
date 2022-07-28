@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:8000/trip";
+const API_URL = "http://localhost:8000/trip/";
 
 // get trip
 const getTrip = async (id) => {
@@ -13,6 +13,11 @@ const getTrip = async (id) => {
 
 // create new trip
 const createTrip = async (tripData) => {
+  // const config = {
+  //   headers: {
+  //     "Content-Type": "application/x-www-form-urlencoded",
+  //   },
+  // };
   const response = await axios.post(API_URL, tripData);
   if (response.data) {
     localStorage.setTrip("trip", JSON.stringify(response.data.data));

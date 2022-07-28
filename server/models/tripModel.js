@@ -2,17 +2,20 @@ import mongoose from "mongoose";
 
 const tripSchema = new mongoose.Schema(
   {
-    name: {
+    tripName: {
       type: String,
-      required: [true, "Please add a name"],
+      required: true,
     },
-    location: {
+    destination: {
       type: String,
-      required: [true, "Please enter a location"],
+      required: true,
     },
     dates: {
       type: String,
-      require: [true, "Please add trip dates"],
+      required: true,
+    },
+    categories: {
+      type: Boolean,
     },
   },
   {

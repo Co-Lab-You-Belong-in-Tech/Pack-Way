@@ -29,7 +29,7 @@ export const getTrip = createAsyncThunk(
 
 // create a new trip
 export const createTrip = createAsyncThunk(
-  "trip/create",
+  "trip/createTrip",
   async (tripData, thunkAPI) => {
     try {
       return await tripService.createTrip(tripData);
