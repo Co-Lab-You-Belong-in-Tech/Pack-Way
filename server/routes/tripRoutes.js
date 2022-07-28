@@ -1,5 +1,4 @@
 import express from "express";
-const router = express.Router();
 
 import {
   getTrip,
@@ -8,8 +7,11 @@ import {
   deleteTrip,
 } from "../controllers/tripController.js";
 
-router.route("/").post(createTrip);
+const router = express.Router();
 
-router.route("/:id").delete(deleteTrip).put(updateTrip).get(getTrip);
+router.post("/", createTrip);
+router.get("/:id", getTrip);
+router.put("/:id", updateTrip);
+router.delete("/:id", deleteTrip);
 
 export default router;

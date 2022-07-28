@@ -9,21 +9,25 @@ export const getTrip = async (req, res) => {
 };
 
 // @desc Create Trip
-// @route POST /api/trip
+// @route POST /trip
 // @access Public (for now)
 export const createTrip = async (req, res) => {
-  if (!req.body.text) {
-    res.status(400).json();
-    throw new Error("Please add a text field");
+  try {
+    // if (!req.body.name) {
+    //   res.status(400).json("Pease add trip info");
+    // }
+    // new trip
+    const trip = await Trip.create({
+      tripName: req.body.tripName,
+      destination: req.body.destination,
+      dates: req.body.dates,
+      categories: req.body.categories,
+    });
+
+    res.status(200).json({ status: "success", data: trip });
+  } catch (error) {
+    res.status(400).json({ status: "error", message: error.message });
   }
-
-  const trip = await Trip.create({
-    name: req.body.name,
-    // location: req.body.location,
-    // dates: req.body.dates,
-  });
-
-  res.status(200).json(trip);
 };
 
 // @desc Update Trip

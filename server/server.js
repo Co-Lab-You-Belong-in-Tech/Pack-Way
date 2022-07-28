@@ -17,7 +17,7 @@ const app = express();
 // connect database
 connectDB();
 
-// cors - only allow front end
+// cors
 app.use(cors({ origin: "http://localhost:3000" }));
 
 // init passport
@@ -26,6 +26,10 @@ app.use(passport.initialize());
 // parse data
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
 
 // routes
 app.use("/trip", tripRouter);

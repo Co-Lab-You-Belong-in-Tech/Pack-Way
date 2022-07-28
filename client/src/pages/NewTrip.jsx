@@ -16,29 +16,88 @@ import { FaHiking } from "react-icons/fa";
 import { FaHammer } from "react-icons/fa";
 import { BiSwim } from "react-icons/bi";
 import Toggle from "../components/Toggle";
+import { createTrip } from "../features/trips/tripSlice";
+import { reset } from "../features/trips/tripSlice";
 import "../styles/NewTrip.css";
 
-const schema = yup.object().shape({
-  tripName: yup.string().required(),
-  destination: yup.string().required(),
-  categories: yup.boolean(true),
-});
+// const schema = yup.object().shape({
+//   tripName: yup.string().required(),
+//   destination: yup.string().required(),
+//   dates: yup.string().required(),
+//   categories: yup.boolean(true),
+// });
 
 function NewTrip() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm({
-    resolver: yupResolver(schema),
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   reset,
+  // } = useForm({
+  //   resolver: yupResolver(schema),
+  // });
+
+  // const [tripName, setTripName] = useState("");
+  // const [destination, setDestination] = useState("");
+  // const [dates, setDates] = useState("");
+  // const [categories, setCategories] = useState(true);
+
+  const [formData, setFormData] = useState({
+    tripName: "",
+    destination: "",
+    dates: "",
   });
+
+  const { tripName, destination, dates } = formData;
+
+  const [categories, setCategories] = useState(true);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [isToggled, setIsToggled] = useState(true);
 
-  const onSubmit = (data) => {
-    console.log({ data });
-    reset();
+  const { trip, isError, isLoading, isSuccess, message } = useSelector(
+    (state) => state.trip
+  );
+
+  useEffect(() => {
+    if (isToggled === true) {
+      setCategories(true);
+    } else {
+      setCategories(false);
+    }
+
+    if (isSuccess) {
+      navigate("/");
+    }
+
+    dispatch(reset);
+  }, [isToggled, trip, isError, isSuccess, message, navigate, dispatch]);
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    const tripData = {
+      tripName,
+      destination,
+      dates,
+      categories,
+    };
+    // const formData = new FormData();
+    // formData.append("tripName", tripName);
+    // formData.append("destination", destination);
+    // formData.append("dates", dates);
+    // formData.append("categories", categories);
+    // console.log("form data", formData);
+
+    dispatch(createTrip(tripData));
   };
 
   return (
@@ -49,26 +108,41 @@ function NewTrip() {
         </div>
         <form className="nameTrip" onSubmit={onSubmit}>
           <div className="formRow">
-            <label htmlFor="tripname">Name your trip</label>
+            <label htmlFor="tripName">Name your trip</label>
             <input
-              {...register("tripname")}
               type="text"
-              name="tripname"
+              name="tripName"
               placeholder="Summer Getaway"
+              value={tripName}
+              onChange={onChange}
             ></input>
-            <p>{errors.tripname?.message}</p>
+            {/* <p>{errors.tripName?.message}</p> */}
           </div>
 
           <div className="formRow">
             <label for="destination">Where are you going?</label>
             <input
-              {...register("desination")}
               type="text"
               name="destination"
               placeholder="Algonquin"
+              value={destination}
+              onChange={onChange}
             ></input>
-            <p>{errors.destination?.message}</p>
+            {/* <p>{errors.destination?.message}</p> */}
           </div>
+
+          <div className="formRow">
+            <label for="dates">Dates of the trip</label>
+            <input
+              type="text"
+              name="dates"
+              placeholder="July 28-31, 2022"
+              value={dates}
+              onChange={onChange}
+            ></input>
+            {/* <p>{errors.dates?.message}</p> */}
+          </div>
+
           <div className="formRowToggle">
             <div className="formRowCheck">
               <label>Add recommended categories to your packing list</label>
