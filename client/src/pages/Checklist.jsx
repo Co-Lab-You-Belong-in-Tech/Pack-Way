@@ -1,5 +1,6 @@
 import React from "react";
 import pwLogo from "../assets/illustrations/pack-way_logo_final.png";
+import lists from "../packingList.json";
 import "../styles/Checklist.css";
 
 function Checklist() {
