@@ -2,10 +2,22 @@ import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema(
   {
-    email: { type: String, required: true, unique: true, lowercase: true },
-    firstName: { type: String },
-    lastName: { type: String },
-    password: { type: String, required: true },
+    firstName: {
+      type: String,
+      required: true,
+    },
+    lastName: {
+      type: String,
+      require: true,
+    },
+    email: {
+      type: String,
+      require: true,
+    },
+    password: {
+      type: String,
+      require: true,
+    },
     trips: [{ type: mongoose.Schema.Types.ObjectId, ref: "Trip" }],
   },
   { timestamps: true }

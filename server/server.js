@@ -1,39 +1,37 @@
 import express from "express";
-import passport from "passport";
-import colors from "colors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 import cors from "cors";
-
-// config import
-import { PORT } from "./config/config.js";
 import connectDB from "./config/db.js";
 
-// route imports
+dotenv.config();
+
+export const PORT = process.env.PORT || 8000;
+export const NODE_ENV = process.env.NODE_ENV;
+
+// import routes
 import tripRouter from "./routes/tripRoutes.js";
-import userRouter from "./routes/userRoutes.js";
+import itemRouter from "./routes/itemRoutes.js";
 
-// init app
-const app = express();
-
-// connect database
+// connect to database
 connectDB();
 
-// cors
-app.use(cors({ origin: "http://localhost:3000" }));
+const app = express();
 
-// init passport
-app.use(passport.initialize());
-
-// parse data
+//use JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+app.use(cors());
 
 // routes
 app.use("/trip", tripRouter);
-app.use("/user", userRouter);
+app.use("/items", itemRouter);
 
-// port listening
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+app.get("/", (req, res) => {
+  res.send("Hello world!");
+});
+
+// port is listening
+app.listen(PORT, () => {
+  console.log(`Server is listening on port : ${PORT}`);
+});

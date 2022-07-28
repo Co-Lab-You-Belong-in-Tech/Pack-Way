@@ -1,5 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
+// import { useSelector, useDispatch } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+// import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { FaBed } from "react-icons/fa";
 import { TbHanger } from "react-icons/tb";
 import { RiFirstAidKitFill } from "react-icons/ri";
@@ -12,13 +17,43 @@ import { FaHammer } from "react-icons/fa";
 import { BiSwim } from "react-icons/bi";
 import Toggle from "../components/Toggle";
 import axios from "axios";
+// import { createTrip } from "../features/trips/tripSlice";
+// import { reset } from "../features/trips/tripSlice";
 import "../styles/NewTrip.css";
 
+// const schema = yup.object().shape({
+//   tripName: yup.string().required(),
+//   destination: yup.string().required(),
+//   dates: yup.string().required(),
+//   categories: yup.boolean(true),
+// });
+
 function NewTrip() {
-  const [tripName, setTripName] = useState("");
-  const [destination, setDestination] = useState("");
-  const [dates, setDates] = useState("");
+  // const {
+  //   register,
+  //   formState: { errors },
+  //   reset,
+  // } = useForm({
+  //   resolver: yupResolver(schema),
+  // });
+
+  // const [tripName, setTripName] = useState("");
+  // const [destination, setDestination] = useState("");
+  // const [dates, setDates] = useState("");
+  // const [categories, setCategories] = useState(true);
+
+  const [formData, setFormData] = useState({
+    tripName: "",
+    destination: "",
+    dates: "",
+  });
+
+  const { tripName, destination, dates } = formData;
+
   const [categories, setCategories] = useState(true);
+
+  // const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
   const [isToggled, setIsToggled] = useState(true);
 
@@ -28,31 +63,45 @@ function NewTrip() {
     } else {
       setCategories(false);
     }
-  }, [isToggled]);
 
-  const createTrip = () => {
-    axios
-      .post("http://localhost:8000/trip/", {
-        tripName,
-        destination,
-        dates,
-        categories,
-      })
-      .then((response) => {
-        alert("Trip Created!");
-      });
+    // axios.post("http://localhost:8000/trip").then((response) => {
+    //   setFormData(response.data);
+    // });
+
+    // if (isSuccess) {
+    //   navigate("/");
+    // }
+
+    // dispatch(reset);
+  }, []);
+  // previous useEffect arraycode:
+  // isToggled, trip, isError, isSuccess, message, navigate, dispatch
+
+  const onChange = (e) => {
+    setFormData((prevState) => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
   };
 
-  // const onSubmit = (event) => {
-  //   event.preventDefault();
+  const onSubmit = (event) => {
+    event.preventDefault();
 
-  //   const tripData = {
-  //     tripName,
-  //     destination,
-  //     dates,
-  //     categories,
-  //   };
-  // };
+    const tripData = {
+      tripName,
+      destination,
+      dates,
+      categories,
+    };
+    // const formData = new FormData();
+    // formData.append("tripName", tripName);
+    // formData.append("destination", destination);
+    // formData.append("dates", dates);
+    // formData.append("categories", categories);
+    // console.log("form data", formData);
+
+    // dispatch(createTrip(tripData));
+  };
 
   return (
     <div className="container">
@@ -60,7 +109,7 @@ function NewTrip() {
         <div className="ntHeader">
           <h1>Create a new trip</h1>
         </div>
-        <form className="nameTrip">
+        <form className="nameTrip" onSubmit={onSubmit}>
           <div className="formRow">
             <label htmlFor="tripName">Name your trip</label>
             <input
@@ -68,9 +117,7 @@ function NewTrip() {
               name="tripName"
               placeholder="Summer Getaway"
               value={tripName}
-              onChange={(e) => {
-                setTripName(e.target.value);
-              }}
+              onChange={onChange}
             ></input>
             {/* <p>{errors.tripName?.message}</p> */}
           </div>
@@ -82,9 +129,7 @@ function NewTrip() {
               name="destination"
               placeholder="Algonquin"
               value={destination}
-              onChange={(e) => {
-                setDestination(e.target.value);
-              }}
+              onChange={onChange}
             ></input>
             {/* <p>{errors.destination?.message}</p> */}
           </div>
@@ -94,11 +139,9 @@ function NewTrip() {
             <input
               type="text"
               name="dates"
-              placeholder="August 10-14, 2022"
+              placeholder="July 28-31, 2022"
               value={dates}
-              onChange={(e) => {
-                setDates(e.target.value);
-              }}
+              onChange={onChange}
             ></input>
             {/* <p>{errors.dates?.message}</p> */}
           </div>
@@ -163,7 +206,7 @@ function NewTrip() {
           </div>
 
           <div className="buttons">
-            <button id="createTrip" type="submit" onClick={createTrip}>
+            <button id="createTrip" type="submit">
               CREATE TRIP
             </button>
             <button id="cancelTrip">CANCEL</button>

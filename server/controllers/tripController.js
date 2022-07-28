@@ -1,45 +1,64 @@
 import Trip from "../models/tripModel.js";
 
-// @desc Get Trip
-// @route GET /api/trip
-// @access Public (for now)
-export const getTrip = async (req, res) => {
-  const trip = await Trip.find();
-  res.status(200).json(trip);
-};
-
-// @desc Create Trip
-// @route POST /trip
-// @access Public (for now)
 export const createTrip = async (req, res) => {
-  try {
-    // if (!req.body.name) {
-    //   res.status(400).json("Pease add trip info");
-    // }
-    // new trip
-    const trip = await Trip.create({
-      tripName: req.body.tripName,
-      destination: req.body.destination,
-      dates: req.body.dates,
-      categories: req.body.categories,
-    });
+  const { tripName, destination, dates, categories } = req.body;
 
-    res.status(200).json({ status: "success", data: trip });
-  } catch (error) {
-    res.status(400).json({ status: "error", message: error.message });
+  if (!tripName || !destination || !dates) {
+    res.status(400);
+    throw new Error("Please add all required fields");
+  }
+
+  // Create trip
+  const trip = await Trip.create({
+    tripName,
+    destination,
+    dates,
+    categories,
+  });
+
+  if (trip) {
+    res.status(201).json({
+      _id: trip.id,
+      tripName: trip.tripName,
+      destination: trip.destination,
+      dates: trip.dates,
+      categories: trip.categories,
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid trip data");
   }
 };
 
-// @desc Update Trip
-// @route PUT /api/trip/:id
-// @access Public (for now)
-export const updateTrip = async (req, res) => {
-  res.status(200).json({ message: `Update trip ${req.params.id}` });
+// Get a trip by id
+export const getTrip = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id);
+    if (!trip) {
+      return res
+        .status(404)
+        .json({ status: "error", message: "Trip not found" });
+    }
+
+    return res.status(200).json({ status: "success", data: trip });
+  } catch (error) {
+    return res.status(400).json({ status: "error", message: error.message });
+  }
 };
 
-// @desc Delete Trip
-// @route DELETE /api/trip/:id
-// @access Public (for now)
-export const deleteTrip = async (req, res) => {
-  res.status(200).json({ message: `Delete trip ${req.params.id}` });
+// Update trip
+export const updateTrip = async (req, res) => {
+  try {
+    const trip = await Trip.findById(req.params.id);
+    if (!trip) {
+      res.status(400).json({ status: "error", message: "Trip not found" });
+    }
+
+    const updatedTrip = await Trip.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.status(200).json(updatedTrip);
+  } catch (error) {
+    return res.status(400).json({ status: "error", message: error.message });
+  }
 };
